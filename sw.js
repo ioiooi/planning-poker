@@ -1,4 +1,4 @@
-const CACHE = 'planning-poker-v1';
+const CACHE = 'planning-poker-__BUILD__';
 const ASSETS = ['./', './index.html', './style.css', './app.js', './manifest.json'];
 
 self.addEventListener('install', (e) => {
