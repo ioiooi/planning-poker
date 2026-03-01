@@ -309,7 +309,7 @@ body {
 /* Corner pips (top-left / bottom-right) on the revealed card */
 .flip-card__pip {
   position: absolute;
-  font-size: clamp(0.85rem, 3vw, 1.1rem);
+  font-size: clamp(1.8rem, 6vw, 2.5rem);
   font-weight: 700;
   color: var(--text-muted);
   line-height: 1;
@@ -322,7 +322,7 @@ body {
 
 /* The large center number */
 .flip-card__value {
-  font-size: clamp(5rem, 28vw, 12rem);
+  font-size: clamp(8rem, 44vw, 12rem);
   font-weight: 900;
   color: var(--text);
   letter-spacing: -0.04em;

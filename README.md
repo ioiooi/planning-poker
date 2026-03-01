@@ -2,6 +2,8 @@
 
 A mobile-first Scrum Planning Poker PWA. Pick your estimate, reveal together.
 
+**Live:** https://ioiooi.github.io/planning-poker/
+
 ## Features
 
 - 9 Fibonacci cards (1, 2, 3, 5, 8, 13, 21, 34, 55)
