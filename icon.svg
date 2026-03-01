@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="28" fill="#1a2c6e"/>
+  <!-- back card -->
+  <rect x="32" y="24" width="100" height="130" rx="10" fill="#0e1e5a" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+  <!-- front card -->
+  <rect x="60" y="48" width="100" height="130" rx="10" fill="#ffffff" filter="url(#s)"/>
+  <defs>
+    <filter id="s" x="-20%" y="-10%" width="140%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.25)"/>
+    </filter>
+  </defs>
+  <!-- number -->
+  <text x="110" y="132" text-anchor="middle" font-size="64" font-weight="900"
+        font-family="-apple-system,BlinkMacSystemFont,system-ui,sans-serif"
+        fill="#1a2c6e">5</text>
+</svg>

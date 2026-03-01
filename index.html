@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Scrum Planning Poker — pick your estimate, reveal together.">
+  <title>Planning Poker</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <span class="header-logo">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="11" height="15" rx="2" fill="currentColor" opacity="0.18"/>
+        <rect x="5" y="4" width="11" height="15" rx="2" stroke="currentColor" stroke-width="1.5" fill="var(--bg)"/>
+        <text x="10.5" y="14" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" font-family="system-ui,sans-serif">A</text>
+      </svg>
+    </span>
+    <h1 class="header-title">Planning Poker</h1>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.5"/>
+        <line x1="12" y1="2" x2="12" y2="4.5"/>
+        <line x1="12" y1="19.5" x2="12" y2="22"/>
+        <line x1="4.22" y1="4.22" x2="5.98" y2="5.98"/>
+        <line x1="18.02" y1="18.02" x2="19.78" y2="19.78"/>
+        <line x1="2" y1="12" x2="4.5" y2="12"/>
+        <line x1="19.5" y1="12" x2="22" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.98" y2="18.02"/>
+        <line x1="18.02" y1="5.98" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </header>
+
+  <main class="main" id="main">
+
+    <section class="view" id="gridView" aria-label="Card selection">
+      <p class="hint" id="gridHint">Pick your estimate</p>
+      <div class="card-grid" id="cardGrid" role="list"></div>
+    </section>
+
+    <section class="view hidden" id="singleView" aria-label="Your card">
+      <p class="hint" id="singleHint">Tap the card to reveal</p>
+      <div class="single-wrap">
+        <div class="flip-card" id="flipCard" role="button" tabindex="0" aria-pressed="false" aria-label="Flip card">
+          <div class="flip-inner" id="flipInner">
+            <div class="flip-face flip-back">
+              <div class="card-inset"></div>
+            </div>
+            <div class="flip-face flip-front">
+              <span class="pip pip-tl" id="pipTL"></span>
+              <span class="pip pip-br" id="pipBR"></span>
+              <span class="big-num" id="bigNum"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <button class="action-btn" id="actionBtn" disabled>Reveal</button>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --bg:            #f0f0f5;
+  --surface:       #ffffff;
+  --surface-2:     #f8f8fc;
+  --border:        rgba(0,0,0,0.09);
+  --text:          #0f0f1a;
+  --text-muted:    #8888a8;
+  --accent:        #3d5cf5;
+  --accent-dim:    rgba(61,92,245,0.12);
+  --accent-hover:  #2b48e0;
+  --shadow-card:   0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
+  --shadow-raised: 0 8px 24px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.07);
+  --card-back-bg:  #1a2c6e;
+  --card-back-line:rgba(255,255,255,0.10);
+  --radius-card:   10px;
+  --radius-btn:    14px;
+  --header-h:      56px;
+  --footer-h:      80px;
+  --transition:    0.2s ease;
+}
+
+[data-theme="dark"] {
+  --bg:            #0d0d1a;
+  --surface:       #181828;
+  --surface-2:     #1e1e32;
+  --border:        rgba(255,255,255,0.07);
+  --text:          #eeeef8;
+  --text-muted:    #7070a0;
+  --accent:        #7b93ff;
+  --accent-dim:    rgba(123,147,255,0.15);
+  --accent-hover:  #8fa4ff;
+  --shadow-card:   0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-raised: 0 8px 28px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+  --card-back-bg:  #0e1e5a;
+  --card-back-line:rgba(255,255,255,0.08);
+}
+
+/* ── Reset & base ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100%;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+/* ── Header ────────────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--header-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.header-logo {
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  flex: 1;
+}
+
+.theme-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), border-color var(--transition);
+  flex-shrink: 0;
+}
+
+.theme-btn:hover { background: var(--accent-dim); }
+
+/* Show sun in dark mode, moon in light mode */
+[data-theme="light"] .icon-moon { display: none; }
+[data-theme="dark"]  .icon-sun  { display: none; }
+
+/* ── Main / views ──────────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc(var(--footer-h) + 8px);
+  min-height: 0;
+}
+
+.view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+}
+
+.view.hidden { display: none; }
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  align-self: flex-start;
+}
+
+/* ── Card grid ─────────────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ── Grid card ─────────────────────────────────────────────── */
+.grid-card {
+  position: relative;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  border: 2px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    background var(--transition);
+  /* 5:7 card ratio via padding-top trick */
+  aspect-ratio: 5 / 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.grid-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-raised);
+}
+
+.grid-card:active { transform: translateY(0) scale(0.97); }
+
+.grid-card.selected {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-raised), 0 0 0 3px var(--accent-dim);
+  transform: translateY(-3px);
+}
+
+/* Corner pips on grid cards */
+.grid-card-pip {
+  position: absolute;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.grid-card-pip.tl { top: 7px; left: 8px; }
+.grid-card-pip.br {
+  bottom: 7px; right: 8px;
+  transform: rotate(180deg);
+}
+
+/* Center number on grid card */
+.grid-card-num {
+  font-size: clamp(1.4rem, calc(10vw - 4px), 2.2rem);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  transition: color var(--transition);
+}
+
+.grid-card.selected .grid-card-num { color: var(--accent); }
+
+/* ── Flip card (single view) ───────────────────────────────── */
+.single-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.flip-card {
+  perspective: 1200px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  aspect-ratio: 5 / 7;
+  width: min(70vw, 260px);
+  border-radius: var(--radius-card);
+  outline-offset: 4px;
+}
+
+.flip-card:focus-visible { outline: 2px solid var(--accent); }
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+  border-radius: var(--radius-card);
+}
+
+.flip-inner.flipped { transform: rotateY(180deg); }
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+/* Card back — the "hidden" face shown initially */
+.flip-back {
+  background-color: var(--card-back-bg);
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      transparent 9px,
+      var(--card-back-line) 9px,
+      var(--card-back-line) 10px
+    ),
+    repeating-linear-gradient(
+      135deg,
+      transparent 0,
+      transparent 9px,
+      var(--card-back-line) 9px,
+      var(--card-back-line) 10px
+    );
+  box-shadow: var(--shadow-raised);
+  transition: background-color var(--transition);
+}
+
+/* Inset border frame — classic playing card detail */
+.card-inset {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* Card front — the revealed face */
+.flip-front {
+  background: var(--surface);
+  box-shadow: var(--shadow-raised);
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+
+/* Corner pips (top-left / bottom-right) on the revealed card */
+.pip {
+  position: absolute;
+  font-size: clamp(0.85rem, 3vw, 1.1rem);
+  font-weight: 700;
+  color: var(--text-muted);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.pip-tl { top: 12px; left: 14px; }
+.pip-br { bottom: 12px; right: 14px; transform: rotate(180deg); }
+
+/* The large center number */
+.big-num {
+  font-size: clamp(3.5rem, 18vw, 7rem);
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  transition: color var(--transition);
+  /* Adjust for two-digit numbers so they don't overflow */
+  max-width: 90%;
+  text-align: center;
+}
+
+/* ── Footer / action button ────────────────────────────────── */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--footer-h);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  transition: background var(--transition), border-color var(--transition);
+  z-index: 10;
+}
+
+.action-btn {
+  width: 100%;
+  max-width: 380px;
+  height: 52px;
+  border-radius: var(--radius-btn);
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease, transform 0.12s ease;
+}
+
+.action-btn:hover:not(:disabled) { background: var(--accent-hover); }
+.action-btn:active:not(:disabled) { transform: scale(0.98); }
+
+.action-btn:disabled {
+  opacity: 0.32;
+  cursor: not-allowed;
+}
+
+/* ── Responsive — larger screens ───────────────────────────── */
+@media (min-width: 500px) {
+  .card-grid {
+    gap: 14px;
+  }
+}
+
+@media (min-width: 700px) {
+  .flip-card {
+    width: min(50vw, 300px);
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner { transition-duration: 0.01ms; }
+  .grid-card  { transition-duration: 0.01ms; }
+}
+
