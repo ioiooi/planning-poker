@@ -63,7 +63,7 @@ function buildGrid() {
 function selectCard(index) {
   // Deselect if same card tapped again
   state.selected = state.selected === index ? null : index;
-  navigator.vibrate?.(25);
+  navigator.vibrate?.([50]);
   renderGrid();
 }
 
@@ -114,7 +114,7 @@ function showGridView() {
 // ── Flip ───────────────────────────────────────────────────────
 function toggleFlip() {
   state.flipped = !state.flipped;
-  navigator.vibrate?.(25);
+  navigator.vibrate?.([50]);
   flipInner.classList.toggle('flip-card__inner--flipped', state.flipped);
   flipCard.setAttribute('aria-pressed', state.flipped ? 'true' : 'false');
   singleHint.textContent = state.flipped ? 'Tap to hide' : 'Tap the card to reveal';
