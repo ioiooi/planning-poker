@@ -71,14 +71,14 @@ body {
   transition: background var(--transition), border-color var(--transition);
 }
 
-.header-logo {
+.header__logo {
   color: var(--accent);
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
 
-.header-title {
+.header__title {
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -103,8 +103,8 @@ body {
 .theme-btn:hover { background: var(--accent-dim); }
 
 /* Show sun in dark mode, moon in light mode */
-[data-theme="light"] .icon-moon { display: none; }
-[data-theme="dark"]  .icon-sun  { display: none; }
+[data-theme="light"] .theme-btn__moon { display: none; }
+[data-theme="dark"]  .theme-btn__sun  { display: none; }
 
 /* ── Main / views ──────────────────────────────────────────── */
 .main {
@@ -126,9 +126,9 @@ body {
   gap: 16px;
 }
 
-.view.hidden { display: none; }
+.view--hidden { display: none; }
 
-.hint {
+.view__hint {
   font-size: 0.8rem;
   color: var(--text-muted);
   letter-spacing: 0.04em;
@@ -150,7 +150,7 @@ body {
 }
 
 /* ── Grid card ─────────────────────────────────────────────── */
-.grid-card {
+.card {
   position: relative;
   border-radius: var(--radius-card);
   background: var(--surface);
@@ -172,21 +172,21 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.grid-card:hover {
+.card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-raised);
 }
 
-.grid-card:active { transform: translateY(0) scale(0.97); }
+.card:active { transform: translateY(0) scale(0.97); }
 
-.grid-card.selected {
+.card--selected {
   border-color: var(--accent);
   box-shadow: var(--shadow-raised), 0 0 0 3px var(--accent-dim);
   transform: translateY(-3px);
 }
 
 /* Corner pips on grid cards */
-.grid-card-pip {
+.card__pip {
   position: absolute;
   font-size: 0.65rem;
   font-weight: 700;
@@ -195,14 +195,14 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-.grid-card-pip.tl { top: 7px; left: 8px; }
-.grid-card-pip.br {
+.card__pip--tl { top: 7px; left: 8px; }
+.card__pip--br {
   bottom: 7px; right: 8px;
   transform: rotate(180deg);
 }
 
 /* Center number on grid card */
-.grid-card-num {
+.card__value {
   font-size: clamp(1.8rem, calc(14vw - 4px), 3rem);
   font-weight: 800;
   color: var(--text);
@@ -211,10 +211,10 @@ body {
   transition: color var(--transition);
 }
 
-.grid-card.selected .grid-card-num { color: var(--accent); }
+.card--selected .card__value { color: var(--accent); }
 
 /* ── Flip card (single view) ───────────────────────────────── */
-.single-wrap {
+.single-view__wrap {
   flex: 1;
   display: flex;
   align-items: center;
@@ -235,7 +235,7 @@ body {
 
 .flip-card:focus-visible { outline: 2px solid var(--accent); }
 
-.flip-inner {
+.flip-card__inner {
   position: relative;
   width: 100%;
   height: 100%;
@@ -244,9 +244,9 @@ body {
   border-radius: var(--radius-card);
 }
 
-.flip-inner.flipped { transform: rotateY(180deg); }
+.flip-card__inner--flipped { transform: rotateY(180deg); }
 
-.flip-face {
+.flip-card__face {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-card);
@@ -257,7 +257,7 @@ body {
 }
 
 /* Card back — the "hidden" face shown initially */
-.flip-back {
+.flip-card__face--back {
   background-color: var(--card-back-bg);
   background-image:
     repeating-linear-gradient(
@@ -279,7 +279,7 @@ body {
 }
 
 /* Inset border frame — classic playing card detail */
-.card-inset {
+.flip-card__inset {
   position: absolute;
   inset: 8px;
   border: 1px solid rgba(255,255,255,0.18);
@@ -288,7 +288,7 @@ body {
 }
 
 /* Card front — the revealed face */
-.flip-front {
+.flip-card__face--front {
   background: var(--surface);
   box-shadow: var(--shadow-raised);
   transform: rotateY(180deg);
@@ -299,7 +299,7 @@ body {
 }
 
 /* Corner pips (top-left / bottom-right) on the revealed card */
-.pip {
+.flip-card__pip {
   position: absolute;
   font-size: clamp(0.85rem, 3vw, 1.1rem);
   font-weight: 700;
@@ -309,11 +309,11 @@ body {
   letter-spacing: -0.02em;
 }
 
-.pip-tl { top: 12px; left: 14px; }
-.pip-br { bottom: 12px; right: 14px; transform: rotate(180deg); }
+.flip-card__pip--tl { top: 12px; left: 14px; }
+.flip-card__pip--br { bottom: 12px; right: 14px; transform: rotate(180deg); }
 
 /* The large center number */
-.big-num {
+.flip-card__value {
   font-size: clamp(5rem, 28vw, 12rem);
   font-weight: 900;
   color: var(--text);
@@ -381,7 +381,6 @@ body {
 
 /* ── Reduced motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .flip-inner { transition-duration: 0.01ms; }
-  .grid-card  { transition-duration: 0.01ms; }
+  .flip-card__inner { transition-duration: 0.01ms; }
+  .card             { transition-duration: 0.01ms; }
 }
-

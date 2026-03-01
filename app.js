@@ -27,16 +27,16 @@ function buildGrid() {
   cardGrid.innerHTML = '';
   FIBONACCI.forEach((value, index) => {
     const card = document.createElement('div');
-    card.className = 'grid-card';
+    card.className = 'card';
     card.setAttribute('role', 'listitem');
     card.setAttribute('aria-label', `Estimate ${value}`);
     card.setAttribute('tabindex', '0');
     card.dataset.index = index;
 
     card.innerHTML = `
-      <span class="grid-card-pip tl" aria-hidden="true">${value}</span>
-      <span class="grid-card-num" aria-hidden="true">${value}</span>
-      <span class="grid-card-pip br" aria-hidden="true">${value}</span>
+      <span class="card__pip card__pip--tl" aria-hidden="true">${value}</span>
+      <span class="card__value" aria-hidden="true">${value}</span>
+      <span class="card__pip card__pip--br" aria-hidden="true">${value}</span>
     `;
 
     card.addEventListener('click', () => selectCard(index));
@@ -59,9 +59,9 @@ function selectCard(index) {
 }
 
 function renderGrid() {
-  const cards = cardGrid.querySelectorAll('.grid-card');
+  const cards = cardGrid.querySelectorAll('.card');
   cards.forEach((card, i) => {
-    card.classList.toggle('selected', i === state.selected);
+    card.classList.toggle('card--selected', i === state.selected);
     card.setAttribute('aria-selected', i === state.selected ? 'true' : 'false');
   });
   actionBtn.disabled = state.selected === null;
@@ -71,7 +71,7 @@ function renderGrid() {
 function showSingleView() {
   state.view = 'single';
   state.flipped = false;
-  flipInner.classList.remove('flipped');
+  flipInner.classList.remove('flip-card__inner--flipped');
   flipCard.setAttribute('aria-pressed', 'false');
 
   const value = FIBONACCI[state.selected];
@@ -80,8 +80,8 @@ function showSingleView() {
   pipBR.textContent  = value;
   singleHint.textContent = 'Tap the card to reveal';
 
-  gridView.classList.add('hidden');
-  singleView.classList.remove('hidden');
+  gridView.classList.add('view--hidden');
+  singleView.classList.remove('view--hidden');
 
   actionBtn.disabled = false;
   actionBtn.textContent = 'Pick again';
@@ -90,10 +90,10 @@ function showSingleView() {
 function showGridView() {
   state.view = 'grid';
   state.flipped = false;
-  flipInner.classList.remove('flipped');
+  flipInner.classList.remove('flip-card__inner--flipped');
 
-  singleView.classList.add('hidden');
-  gridView.classList.remove('hidden');
+  singleView.classList.add('view--hidden');
+  gridView.classList.remove('view--hidden');
 
   actionBtn.textContent = 'Reveal';
   actionBtn.disabled = state.selected === null;
@@ -102,7 +102,7 @@ function showGridView() {
 // ── Flip ───────────────────────────────────────────────────────
 function toggleFlip() {
   state.flipped = !state.flipped;
-  flipInner.classList.toggle('flipped', state.flipped);
+  flipInner.classList.toggle('flip-card__inner--flipped', state.flipped);
   flipCard.setAttribute('aria-pressed', state.flipped ? 'true' : 'false');
   singleHint.textContent = state.flipped ? 'Tap to hide' : 'Tap the card to reveal';
 }
