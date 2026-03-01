@@ -8,7 +8,6 @@
   --text-muted:    #8888a8;
   --accent:        #3d5cf5;
   --accent-dim:    rgba(61,92,245,0.12);
-  --accent-hover:  #2b48e0;
   --shadow-card:   0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
   --shadow-raised: 0 8px 24px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.07);
   --card-back-bg:  #1a2c6e;
@@ -30,7 +29,6 @@
   --text-muted:    #7070a0;
   --accent:        #7b93ff;
   --accent-dim:    rgba(123,147,255,0.15);
-  --accent-hover:  #8fa4ff;
   --shadow-card:   0 2px 8px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
   --shadow-raised: 0 8px 28px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.10);
   --card-back-bg:  #0e1e5a;
@@ -387,8 +385,19 @@ body {
   }
 }
 
+/* ── View fade-in ──────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.view--fade-in {
+  animation: fadeIn 0.25s ease;
+}
+
 /* ── Reduced motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .flip-card__inner { transition-duration: 0.01ms; }
   .card             { transition-duration: 0.01ms; animation: none; }
+  .view--fade-in    { animation: none; }
 }

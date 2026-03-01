@@ -22,13 +22,21 @@ const pipBR       = document.getElementById('pipBR');
 const singleHint  = document.getElementById('singleHint');
 const themeBtn    = document.getElementById('themeBtn');
 
+// ── Fade-in helper ─────────────────────────────────────────────
+function applyFadeIn(el) {
+  el.classList.remove('view--fade-in');
+  // Force reflow so re-adding the class restarts the animation
+  void el.offsetWidth;
+  el.classList.add('view--fade-in');
+}
+
 // ── Build grid ─────────────────────────────────────────────────
 function buildGrid() {
   cardGrid.innerHTML = '';
   FIBONACCI.forEach((value, index) => {
     const card = document.createElement('div');
     card.className = 'card';
-    card.setAttribute('role', 'listitem');
+    card.setAttribute('role', 'option');
     card.setAttribute('aria-label', `Estimate ${value}`);
     card.setAttribute('tabindex', '0');
     card.dataset.index = index;
@@ -55,6 +63,7 @@ function buildGrid() {
 function selectCard(index) {
   // Deselect if same card tapped again
   state.selected = state.selected === index ? null : index;
+  navigator.vibrate?.(25);
   renderGrid();
 }
 
@@ -65,6 +74,7 @@ function renderGrid() {
     card.setAttribute('aria-selected', i === state.selected ? 'true' : 'false');
   });
   actionBtn.disabled = state.selected === null;
+  actionBtn.textContent = state.selected === null ? 'Select a card' : 'Reveal';
 }
 
 // ── Switch views ───────────────────────────────────────────────
@@ -82,9 +92,10 @@ function showSingleView() {
 
   gridView.classList.add('view--hidden');
   singleView.classList.remove('view--hidden');
+  applyFadeIn(singleView);
 
   actionBtn.disabled = false;
-  actionBtn.textContent = 'Pick again';
+  actionBtn.textContent = 'Back to cards';
 }
 
 function showGridView() {
@@ -94,14 +105,16 @@ function showGridView() {
 
   singleView.classList.add('view--hidden');
   gridView.classList.remove('view--hidden');
+  applyFadeIn(gridView);
 
-  actionBtn.textContent = 'Reveal';
+  actionBtn.textContent = state.selected === null ? 'Select a card' : 'Reveal';
   actionBtn.disabled = state.selected === null;
 }
 
 // ── Flip ───────────────────────────────────────────────────────
 function toggleFlip() {
   state.flipped = !state.flipped;
+  navigator.vibrate?.(25);
   flipInner.classList.toggle('flip-card__inner--flipped', state.flipped);
   flipCard.setAttribute('aria-pressed', state.flipped ? 'true' : 'false');
   singleHint.textContent = state.flipped ? 'Tap to hide' : 'Tap the card to reveal';
@@ -117,6 +130,9 @@ function initTheme() {
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('pp-theme', theme);
+  themeBtn.setAttribute('aria-label',
+    theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+  );
 }
 
 function toggleTheme() {
@@ -150,6 +166,6 @@ buildGrid();
 // ── Service Worker ─────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {/* offline not critical */});
+    navigator.serviceWorker.register('sw.js').catch((e) => console.warn('SW registration failed:', e));
   });
 }
