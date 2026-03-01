@@ -79,11 +79,11 @@ function renderGrid() {
 
 // ── Switch views ───────────────────────────────────────────────
 function showSingleView() {
+  if (state.selected === null) return;
   state.view = 'single';
   state.flipped = false;
   flipInner.classList.remove('flip-card__inner--flipped');
   flipCard.setAttribute('aria-pressed', 'false');
-
   const value = FIBONACCI[state.selected];
   bigNum.textContent = value;
   pipTL.textContent  = value;
@@ -165,7 +165,10 @@ buildGrid();
 
 // ── Service Worker ─────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
+  let reloading = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloading) return;
+    reloading = true;
     window.location.reload();
   });
   window.addEventListener('load', () => {

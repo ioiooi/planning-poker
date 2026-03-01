@@ -1,4 +1,5 @@
 {
+  "id": ".",
   "name": "Planning Poker",
   "short_name": "Poker",
   "description": "Scrum Planning Poker — pick your estimate, reveal together.",
