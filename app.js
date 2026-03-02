@@ -2,6 +2,13 @@
 
 const FIBONACCI = [1, 2, 3, 5, 8, 13, 21, 34, 55];
 
+// Tier mapping for visual hue shifts
+function getTier(value) {
+  if (value <= 3)  return 'low';
+  if (value <= 13) return 'mid';
+  return 'high';
+}
+
 // ── State ──────────────────────────────────────────────────────
 const state = {
   selected: null,   // index into FIBONACCI, or null
@@ -40,6 +47,7 @@ function buildGrid() {
     card.setAttribute('aria-label', `Estimate ${value}`);
     card.setAttribute('tabindex', '0');
     card.dataset.index = index;
+    card.dataset.tier = getTier(value);
 
     card.innerHTML = `
       <span class="card__pip card__pip--tl" aria-hidden="true">${value}</span>
@@ -85,6 +93,7 @@ function showSingleView() {
   flipInner.classList.remove('flip-card__inner--flipped');
   flipCard.setAttribute('aria-pressed', 'false');
   const value = FIBONACCI[state.selected];
+  flipCard.dataset.tier = getTier(value);
   bigNum.textContent = value;
   pipTL.textContent  = value;
   pipBR.textContent  = value;
